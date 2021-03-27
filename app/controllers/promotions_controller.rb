@@ -19,6 +19,15 @@ class PromotionsController < ApplicationController
       render :new
     end
   end
+ 
+  def generate_coupons
+    @promotion = Promotion.find(params[:id])
+    @promotion.generate_coupons!
+    Coupon.generate(@promotion)
+
+    flash[:notice] = 'Cupons gerados com sucesso'
+    redirect_to @promotion
+  end
 
   private
 
