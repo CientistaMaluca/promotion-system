@@ -1,4 +1,6 @@
 class PromotionsController < ApplicationController
+  before_action :set_promotion, only: %i[show generate_coupons]
+  
   def index
     @promotions = Promotion.all
   end
@@ -21,16 +23,16 @@ class PromotionsController < ApplicationController
   end
  
   def generate_coupons
-    @promotion = Promotion.find(params[:id])
     @promotion.generate_coupons!
-    Coupon.generate(@promotion)
-
-    flash[:notice] = 'Cupons gerados com sucesso'
-    redirect_to @promotion
+    redirect_to @promotion, notice: 'Cupons gerados com sucesso'
   end
 
   private
 
+    def set_promotion
+      @promotion = Promotion.find(params[:id])
+    end
+ 
     def promotion_params
       params
         .require(:promotion)
