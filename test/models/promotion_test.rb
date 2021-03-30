@@ -5,3 +5,4 @@ class PromotionTest < ActiveSupport::TestCase
   #   assert true
   # end
 end
+ 
